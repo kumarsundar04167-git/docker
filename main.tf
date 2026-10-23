@@ -6,7 +6,7 @@ resource "aws_instance" "example" {
   user_data = templatefile ("${path.module}/docker.sh.tftpl", {
     partition_number = 4
     extend_size = 30
-})
+  })
   
   root_block_device {
     volume_type           = "gp3"
@@ -21,14 +21,21 @@ resource "aws_instance" "example" {
     project = "roboshop"
     Environment = "dev"
   }
+  }
 }
-
 resource "aws_security_group" "allow_docker" {
   name        = "allow_docker"
   description = "Allow TLS inbound traffic and all outbound traffic"
  ingress {
     from_port = 22
     to_port   = 22
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+ }
+
+ ingress {
+    from_port = 80
+    to_port   = 80
     protocol  = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
  }
