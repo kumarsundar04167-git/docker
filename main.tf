@@ -16,13 +16,14 @@ resource "aws_instance" "example" {
         project = "roboshop"
         Environment = "dev"
     }
+  }  
   tags = {
     Name = "docker"
     project = "roboshop"
     Environment = "dev"
   }
-  }
 }
+
 resource "aws_security_group" "allow_docker" {
   name        = "allow_docker"
   description = "Allow TLS inbound traffic and all outbound traffic"
